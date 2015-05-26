@@ -1,0 +1,287 @@
+<!DOCTYPE HTML>
+<html lang="en" prefix="og: http://ogp.me/ns#">
+  <head>
+    <meta charset="utf-8">
+    <title>Javascript 1.6 / ES2015 Features &mdash; Alvernhe Eric</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link href='http://fonts.googleapis.com/css?family=Poly:400,400italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" media="screen, projection" href="/res/screen.css" type="text/css">
+    <link rel="stylesheet" media="print" href="/res/print.css" type="text/css">
+    <link rel="alternate" type="application/atom+xml" title="Alvernhe Eric" href="/atom.xml">
+    <link rel="apple-touch-icon-precomposed" href="/res/apple-touch-icon-57x57-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/res/apple-touch-icon-72x72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/res/apple-touch-icon-114x114-precomposed.png">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@rsms">
+    
+    <meta property="fb:admins" content="728642302">
+    <meta property="fb:app_id" content="38027689216">
+    
+    <meta property="og:title" content="Javascript 1.6 / ES2015 Features">
+      
+      <meta name="description" content="Javascript 1.6 / ES2015 Features May 26, 2015 Introduction Let et Const &ldquo;Problème&rdquo; : Hoisting function f(){ console.log(a); } Ce code renvoie : Uncaught ReferenceError:...">
+      <meta name="og:description" content="Javascript 1.6 / ES2015 Features May 26, 2015 Introduction Let et Const &ldquo;Problème&rdquo; : Hoisting function f(){ console.log(a); } Ce code renvoie : Uncaught ReferenceError:...">
+      
+    
+    
+    
+    
+    <meta property="og:url" content="http://rsms.me/2015/05/26/es1.6.html">
+    <meta property="og:site_name" content="rsms.me">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="en_GB" />
+    
+    <meta property="article:published_time" content="2015-05-26">
+    
+    
+    <script>
+  //html { zoom:50%; }
+  if (window.addEventListener) {
+    var sidebarAdjustTimer;
+    function updateOrientation(orientationChangeEvent) {
+      if (sidebarAdjustTimer) clearInterval(sidebarAdjustTimer);
+      //console.log('window.orientation -> '+window.orientation);
+      if (window.orientation === -90 || window.orientation === 90) {
+        // landscape
+        var sidebar = document.getElementById('sidebar');
+        if (!sidebar.src || sidebar.src === '') {
+          sidebar.src = '/archive/sidebar.html';
+        }
+        sidebarAdjustTimer = setInterval(function() {
+          var height = Math.round(document.height * 1.6);
+          if (sidebar.height != height) {
+            sidebar.height = height;
+            sidebar.style.height = height + 'px';
+          }
+        },500);
+      } else {
+        // portrait
+      }
+    }
+    window.addEventListener('orientationchange', updateOrientation);
+    document.addEventListener('DOMSubtreeModified', function(ev) {
+      if (document.getElementById('sidebar')) {
+        document.removeEventListener('DOMSubtreeModified', arguments.callee);
+        updateOrientation();
+      }
+    });
+  }
+</script>
+    
+  </head>
+  <body>
+
+    <iframe id="sidebar"></iframe>
+    <header>
+      <h1 class="logo" onclick="document.location.href='/';"><a href="/"><img src="/res/signature-2-2.png" width="160" height="50" alt="Signature"></a></h1>
+      <ul class="navigation">
+        <li><a href="/archive/" title="Archived articles">Archive</a></li>
+        <li><a href="/about/">About me</a></li>
+      </ul>
+    </header>
+      <div class="content">
+  <div class="post single">
+    
+    <h1>Javascript 1.6 / ES2015 Features</h1>
+    <info datetime="2015-05-26">
+      May 26, 2015
+    </info>
+    
+    <div class="body"><h1>Introduction</h1>
+
+<h1>Let et Const</h1>
+
+<h2>&ldquo;Problème&rdquo; : Hoisting</h2>
+
+<pre><code class="js">function f(){
+    console.log(a);
+}
+</code></pre>
+
+<p>Ce code renvoie :
+Uncaught
+ReferenceError: a is not defined</p>
+
+<pre><code class="js">function f(){
+    console.log(a);
+    var a;
+}
+</code></pre>
+
+<p>Ce code renvoie :
+undefined</p>
+
+<p>Pourquoi ? les déclarartions de variables aveec le mot clé var sont déplacer en début de leurs scopes lors du pré-processing (hoisting).</p>
+
+<pre><code class="js">function f(b){
+    if(true) {
+        var a;
+        a = 10;
+    }
+    console.log(a);//return 10, a is hoisting
+}
+</code></pre>
+
+<h2>Solution/Nouveauté Javascript 1.6 : Let !</h2>
+
+<pre><code class="js">function f(b){
+    if(true) {
+        let a;
+        a = 10;
+    }
+    console.log(a);//ReferenceError: a is not defined
+}
+</code></pre>
+
+<h2>Nouveauté  : Const !</h2>
+
+<pre><code class="js">function f(b){
+    const a = 10;
+    a = 5; //error a is a const !
+    const b = {toto : 7};
+    b= {};//error b is a const !
+    b.toto = 8; //ok, not a deep immutable
+
+}
+</code></pre>
+
+<h1>Les Lambda</h1>
+
+<h2>problème binding this !</h2>
+
+<pre><code class="js">function g(){
+    var a = 10;
+    return function(){
+    console.log(this.a);vi 
+    };
+};
+
+g();
+
+obj.foo(); //10
+
+//j'arrache la fonction foo pour la mettre dans funcUnbinding
+var funcUnbinding = obj.foo;
+funcUnbinding(); //undefined ! this is no more bind to object obj
+</code></pre>
+
+<h2>solution : les lambdas</h2>
+</div>
+    <!-- <div class="breaker"></div> -->
+    <div class="breaker"></div>
+    <!-- <info class="after">
+<div class="fb-like" data-href="http://rsms.me/2015/05/26/es1.6.html" data-send="false" data-width="550" data-show-faces="false" data-font="arial"></div>
+    </info> -->
+
+  </div>
+</div>
+
+<!-- During authoring, this automatically reloads the post as its changing -->
+<script type="text/javascript">
+(function() {
+var qs = document.location.search;
+var current_etag = qs.match(/etag=("?[a-zA-Z0-9_-]+)/);
+if (current_etag !== null) { current_etag = current_etag[1]; }
+var scrolly = qs.match(/scrolly=([0-9]+)/);
+if (scrolly) {
+  scrolly = parseInt(scrolly[1]);
+  window.scrollTo(window.scrollX, scrolly);
+  setTimeout(function () {
+    window.scrollTo(window.scrollX, scrolly);
+  }, 10);
+}
+
+function check() {
+  var r = new XMLHttpRequest();
+  var url = document.location.href + ((qs && qs !== '') ? '&' : '?') + 'r=' + Math.random();
+  r.open('GET', url, true);
+  r.onreadystatechange = function() {
+    if (r.readyState == 4){
+      var found_etag = r.getResponseHeader('Etag').replace(/^"|"$/g);
+      //console.log('current_etag:', current_etag, 'found_etag:', found_etag);
+      if (current_etag === null) {
+        current_etag = found_etag;
+      } else if (found_etag !== current_etag) {
+        document.location.search =
+          '?etag=' + encodeURIComponent(found_etag) +
+          '&scrolly=' + window.scrollY;
+        return;
+      }
+      setTimeout(check, 500);
+    }
+  };
+  r.send(null);
+}
+check();
+})();
+</script>
+
+
+    
+    
+    
+    
+    
+    
+    <footer>
+      <p>
+        <a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US" class="cc"><img src="/res/cc-cc.png" class="cc">
+        <img src="/res/cc-by.png" class="cc"></a>
+        This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US">Creative Commons License</a>
+      </p>
+    </footer>
+    
+    
+    <script>
+  var n,i,L,cn,v = document.getElementsByTagName('pre');
+  for (i=0,L=v.length;i<L;++i) {
+    n = v.item(i);
+    if ((cn = n.firstChild) && cn.nodeName == 'CODE') {
+      if (cn.className.indexOf("none") !== -1 || cn.className.indexOf("txt") !== -1) {
+        cn.className = 'nohighlight';
+      }
+    }
+  }
+</script>
+<link rel="stylesheet" media="all" href="/res/highlight.css" type="text/css">
+<script src="/res/highlight.js"></script>
+
+    <script>
+  // curry pre < code to be able to get prettified
+  // If the first line is
+  //   #!-langname\n
+  // Then that line is removed from the code and "langname" is given to prettify.
+  // If "langname" is "none", that prettify is not applied at all.
+  var n,i,L,cn,lang,v = document.getElementsByTagName('pre');
+  var m,lang_re = /^#\!-([a-zA-Z0-9_-]+)\n/;
+  for (i=0,L=v.length;i<L;++i) {
+    n = v.item(i);
+    if ((cn = n.firstChild) && cn.nodeName == 'CODE') {
+      lang = null;
+      if (cn.firstChild.nodeType === Node.TEXT_NODE) {
+        m = lang_re.exec(cn.firstChild.nodeValue);
+        if (m) {
+          lang = m[1].toLowerCase();
+          cn.firstChild.nodeValue = cn.firstChild.nodeValue.substr(m[0].length);
+          if (lang === 'none') {
+            continue;
+          }
+        }
+      }
+      if (!lang) {
+        lang = cn.className;
+      }
+      n.setAttribute('class', 'prettyprint'+(lang ? ' lang-' + lang : ''));
+    }
+  }
+</script>
+<script async src="/res/prettify.js"></script>
+
+  
+
+  </body>
+</html>
