@@ -98,7 +98,7 @@ Nous ne présentons que quelques fonctionnalités/syntaxes nouvelles en regard d
 
 <h1>Scope and Hoisting</h1>
 
-<h2>&ldquo;Problème&rdquo; : Hoisting, the scope is the function</h2>
+<h2>Problème : Hoisting, the scope is the function</h2>
 
 <pre><code class="js">function f(){
     console.log(a);
@@ -155,7 +155,7 @@ Nous ne présentons que quelques fonctionnalités/syntaxes nouvelles en regard d
 
 <h1>Les Lambda</h1>
 
-<h2>problème binding &ldquo;this&rdquo; !</h2>
+<h2>Problème binding &ldquo;this&rdquo; !</h2>
 
 <p>Exemple from <a href="https://leanpub.com/understandinges6/read/" >LeanPub</a></p>
 
@@ -175,7 +175,7 @@ Nous ne présentons que quelques fonctionnalités/syntaxes nouvelles en regard d
 };
 </code></pre>
 
-<h2>solution : les lambdas (Arrow functions)</h2>
+<h2>Solution : les lambdas (Arrow functions)</h2>
 
 <pre><code class="js">
 var PageHandler = {
@@ -195,7 +195,7 @@ var PageHandler = {
 
 <h1>Boilerplate</h1>
 
-<h2>problème, initialisations&hellip;</h2>
+<h2>Problème, initialisations, code verbeux&hellip;</h2>
 
 <pre><code class="js">function foo(toto){
     toto = toto === undefined ? 5 : toto; //valeur par defaut 5
@@ -216,7 +216,7 @@ function other(){
 }
 </code></pre>
 
-<h2>solution : destructuring, default value,&hellip;</h2>
+<h2>Solution : destructuring, default value,&hellip;</h2>
 
 <pre><code class="js">function foo(toto = 5){
     var titi = 51;
@@ -230,7 +230,7 @@ function other(){
 }
 </code></pre>
 
-<h2>problème : dealing with arguments&hellip;</h2>
+<h2>Problème : dealing with arguments&hellip;</h2>
 
 <pre><code class="js">function foo(){
     //arguments is not an array !
@@ -246,7 +246,7 @@ function other(){
 foo("toot",15,null,{titi:"totot"});
 </code></pre>
 
-<h2>solution : with rest param !</h2>
+<h2>Solution : with rest param !</h2>
 
 <pre><code class="js">function foo(...args){
 //yes args is a real array with all the built-in functions
