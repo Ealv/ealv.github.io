@@ -23,8 +23,8 @@
     
     <meta property="og:title" content="Javascript 1.6 / ES2015 Features">
       
-      <meta name="description" content="Javascript 1.6 / ES2015 Features May 26, 2015 Scope and hoisting &ldquo;Problème&rdquo; : Hoisting, the scope is the function function f(){ console.log(a); } Ce code...">
-      <meta name="og:description" content="Javascript 1.6 / ES2015 Features May 26, 2015 Scope and hoisting &ldquo;Problème&rdquo; : Hoisting, the scope is the function function f(){ console.log(a); } Ce code...">
+      <meta name="description" content="Javascript 1.6 / ES2015 Features May 26, 2015 Introduction Il s'agit de quelques améliorations de JS 2015 aka 1.6. Nous ne présentons que quelques fonctionnalités/syntaxes...">
+      <meta name="og:description" content="Javascript 1.6 / ES2015 Features May 26, 2015 Introduction Il s'agit de quelques améliorations de JS 2015 aka 1.6. Nous ne présentons que quelques fonctionnalités/syntaxes...">
       
     
     
@@ -91,7 +91,12 @@
       May 26, 2015
     </info>
     
-    <div class="body"><h1>Scope and hoisting</h1>
+    <div class="body"><h1>Introduction</h1>
+
+<p>Il s'agit de quelques améliorations de JS 2015 aka 1.6.
+Nous ne présentons que quelques fonctionnalités/syntaxes nouvelles en regard de problèmes existants inhérent au langage.</p>
+
+<h1>Scope and hoisting</h1>
 
 <h2>&ldquo;Problème&rdquo; : Hoisting, the scope is the function</h2>
 
@@ -115,7 +120,7 @@ undefined</p>
 
 <p>Pourquoi ? les déclarartions de variables aveec le mot clé var sont déplacer en début de leurs scopes lors du pré-processing (hoisting).</p>
 
-<pre><code class="js">function f(b){
+<pre><code class="js">function f(){
     if(true) {
         var a;
         a = 10;
@@ -126,7 +131,7 @@ undefined</p>
 
 <h2>Solution/Nouveauté Javascript 1.6 : Let !</h2>
 
-<pre><code class="js">function f(b){
+<pre><code class="js">function f(){
     if(true) {
         let a;
         a = 10;
@@ -135,14 +140,14 @@ undefined</p>
 }
 </code></pre>
 
-<h2>Nouveauté  : Const !</h2>
+<h2>Nouveauté  : Const (let &ldquo;soft&rdquo; immutable) !</h2>
 
-<pre><code class="js">function f(b){
+<pre><code class="js">function f(){
     const a = 10;
     a = 5; //error a is a const !
-    const b = {toto : 7};
-    b= {};//error b is a const !
-    b.toto = 8; //ok, not a deep immutable
+    const c = {toto : 7};
+    c= {};//error b is a const !
+    c.toto = 8; //ok, not a deep immutable
 
 }
 </code></pre>
@@ -258,6 +263,35 @@ foo("toot",15,null,{titi:"totot"});
 };
 foo("toot",15,null,{titi:"totot"});
 </code></pre>
+
+<h1>pyramid of doom , callback hell.</h1>
+
+<p>Javascript est single-thread et asynchrone.</p>
+
+<p>Afin de ne pas bloquer <a href="http://latentflip.com/loupe/?code=!!!PGJ1dHRvbj5DbGljayBtZSE8L2J1dHRvbj4%3D" >l'event-loop</a> coté client
+(et pour les mêmes raisons coté backend) il faut pouvoir defferer les appels qui diovent être consécutifs.</p>
+
+<pre><code class="js">
+var app = App();
+
+app.init(function(){
+    app.checkCredentials("user", "password",function(){
+        //user is granted
+        app.connectToDB(function(){
+            //user is connected to db
+            app.addUserComments("hie", function(){
+                //comment "hie" is added
+            });
+        });
+    });
+}
+</code></pre>
+
+<h2>solution promise, generator, async await ?</h2>
+
+<p>Beaucoup de solutions existantes autours de librairies :
+-Q
+-Co</p>
 </div>
     <!-- <div class="breaker"></div> -->
     <div class="breaker"></div>
