@@ -109,6 +109,8 @@ Nous ne présentons que quelques fonctionnalités/syntaxes nouvelles en regard d
 Uncaught
 ReferenceError: a is not defined</p>
 
+<h3>Hoisting</h3>
+
 <pre><code class="js">function f(){
     console.log(a);
     var a;
@@ -119,6 +121,8 @@ ReferenceError: a is not defined</p>
 undefined</p>
 
 <p>Pourquoi ? les déclarartions de variables aveec le mot clé var sont déplacer en début de leurs scopes lors du pré-processing (hoisting).</p>
+
+<h3>The scope is the function</h3>
 
 <pre><code class="js">function f(){
     if(true) {
@@ -140,7 +144,7 @@ undefined</p>
 }
 </code></pre>
 
-<h2>Nouveauté  : Const (let &ldquo;soft&rdquo; immutable) !</h2>
+<h2>Nouveauté  : Const (let immutable) !</h2>
 
 <pre><code class="js">function f(){
     const a = 10;
@@ -197,8 +201,9 @@ var PageHandler = {
 <h2>problème, initialisations&hellip;</h2>
 
 <pre><code class="js">function foo(toto){
-    toto = toto || 5;
+    toto = toto === undefined ? 5 : toto; //valeur par defaut 5
     var titi = 51;
+    //objet literal avec param même nom que la variable
     return {
         toto : toto,
         titi : titi
@@ -207,21 +212,18 @@ var PageHandler = {
 
 function other(){
     var res =  foo();
+    //on doit récupérer les éléments qui nous intéressent de res
     var toto = res.toto;
     var titi = res.titi;
     console.log("toto is " + toto + " titi  " + titi);
 }
 </code></pre>
 
-<h2>solution destructuring default value</h2>
+<h2>solution : destructuring, default value,&hellip;</h2>
 
 <pre><code class="js">function foo(toto = 5){
     var titi = 51;
-
-    return {
-         toto,
-         titi
-    };
+    return {toto, titi};
 };
 
 
@@ -231,7 +233,7 @@ function other(){
 }
 </code></pre>
 
-<h2>problème, dealing with arguments &hellip;</h2>
+<h2>problème : dealing with arguments&hellip;</h2>
 
 <pre><code class="js">function foo(){
     //arguments is not an array !
@@ -247,19 +249,20 @@ function other(){
 foo("toot",15,null,{titi:"totot"});
 </code></pre>
 
-<h2>solution with rest param</h2>
+<h2>solution : with rest param !</h2>
 
 <pre><code class="js">function foo(...args){
+//yes args is a real array with all the built-in functions
     args.forEach(function(elem){console.log(elem);});   //toot,15,null,{ titi: 'totot' }
 };
 foo("toot",15,null,{titi:"totot"});
 </code></pre>
 
-<p>Mais on peut aussi utiliser explicitement certains params</p>
+<p>Mais on peut aussi utiliser explicitement certains params (right-Variadic)</p>
 
 <pre><code class="js">function foo(first,...args){
-    console.log(first);
-    args.forEach(function(elem){console.log(elem);});
+    console.log(first);//toot
+    args.forEach(function(elem){console.log(elem);});//15,null,{ titi: 'totot' }
 };
 foo("toot",15,null,{titi:"totot"});
 </code></pre>
@@ -269,7 +272,8 @@ foo("toot",15,null,{titi:"totot"});
 <p>Javascript est single-thread et asynchrone.</p>
 
 <p>Afin de ne pas bloquer <a href="http://latentflip.com/loupe/?code=!!!PGJ1dHRvbj5DbGljayBtZSE8L2J1dHRvbj4%3D" >l'event-loop</a> coté client
-(et pour les mêmes raisons coté backend) il faut pouvoir defferer les appels qui diovent être consécutifs.</p>
+(et pour les mêmes raisons coté backend avec node.js) il faut pouvoir déférer les appels qui doivent être consécutifs.
+C'est là où interviennent les call-back.</p>
 
 <pre><code class="js">
 var app = App();
