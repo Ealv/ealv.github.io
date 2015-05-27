@@ -288,8 +288,12 @@ app.init(function(){
 }
 </code></pre>
 
+<h1>Problème : Pyramid of doom, callback hell.</h1>
+
 <p>La pyramide of doom c'est les multiples fermetures &ldquo;&rdquo;});});&ldquo; en fin de fonction.
-Idéalement on voudrait écrire cela :</p>
+Notre exemple peut être en pratique beaucoup plus compliqué.</p>
+
+<p>Idéalement on voudrait écrire cela :</p>
 
 <pre><code class="js">var app = App();
 app.init()
@@ -300,7 +304,7 @@ app.init()
 
 <p>C'est à dire écrire &ldquo;presque&rdquo; en style synchrone, mais en guardant le comportement asynchrone</p>
 
-<p>.## solution promise, generator, async await ?</p>
+<h2>Solution : Promise, Generator, Async Await ?</h2>
 
 <p>Beaucoup de solutions existantes autours de librairies :</p>
 
@@ -311,6 +315,19 @@ app.init()
 <li><a href="https://www.npmjs.com/search?q=async" target="_blank">... et 4906 packages npm (à l'heure d'aujourd'hui) qui correspondent à async...</a>
 </ul>
 
+
+<p>Exemple avec la librairie Q :</p>
+
+<pre><code class="js">var app = App();
+Q.fcall(app.init())
+.then(checkCredentials("user", "password"))
+.then(app.connectToDB())
+.then(addUserComments("hie"))
+.catch(function (error) {
+    // Handle any error from all above steps 
+})
+.done();
+</code></pre>
 
 <p>Mais aussi autours de solutions natives en 1.6 et ou 1.7:</p>
 
