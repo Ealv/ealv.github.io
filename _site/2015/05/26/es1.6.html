@@ -94,9 +94,9 @@
     <div class="body"><h1>Introduction</h1>
 
 <p>Il s'agit de quelques améliorations de JS 2015 aka 1.6.
-Nous ne présentons que quelques fonctionnalités/syntaxes nouvelles en regard de problèmes existants inhérent au langage.</p>
+Nous ne présentons que quelques fonctionnalités/syntaxes nouvelles en regard de problèmes de la version 1.5.</p>
 
-<h1>Scope and hoisting</h1>
+<h1>Scope and Hoisting</h1>
 
 <h2>&ldquo;Problème&rdquo; : Hoisting, the scope is the function</h2>
 
@@ -105,9 +105,7 @@ Nous ne présentons que quelques fonctionnalités/syntaxes nouvelles en regard d
 }
 </code></pre>
 
-<p>Ce code renvoie :
-Uncaught
-ReferenceError: a is not defined</p>
+<p>Uncaught ReferenceError: a is not defined</p>
 
 <h3>Hoisting</h3>
 
@@ -117,10 +115,9 @@ ReferenceError: a is not defined</p>
 }
 </code></pre>
 
-<p>Ce code renvoie :
-undefined</p>
+<p>undefined</p>
 
-<p>Pourquoi ? les déclarartions de variables aveec le mot clé var sont déplacer en début de leurs scopes lors du pré-processing (hoisting).</p>
+<p>Pourquoi ? les déclarations de variables avec le mot clé &ldquo;var&rdquo; sont déplacés en début de leurs scopes lors du pré-processing (Hoisting).</p>
 
 <h3>The scope is the function</h3>
 
@@ -129,7 +126,7 @@ undefined</p>
         var a;
         a = 10;
     }
-    console.log(a);//return 10, a is hoisting
+    console.log(a);//return 10, the a déclaration (var a) is hoisted
 }
 </code></pre>
 
@@ -239,7 +236,7 @@ function other(){
     //arguments is not an array !
     arguments.forEach(function(elem){console.log(elem);});//undefined is not a function
 
-    ///we must do this ugly thing to convert :
+    ///hiiiiiii ! we must do this ugly thing to convert arguments as array:
     var args = Array.prototype.slice.call(arguments);
     args.forEach(function(elem){console.log(elem);}); //toot,15,null,{ titi: 'totot' }
 
@@ -267,12 +264,12 @@ foo("toot",15,null,{titi:"totot"});
 foo("toot",15,null,{titi:"totot"});
 </code></pre>
 
-<h1>pyramid of doom , callback hell.</h1>
+<h1>Pyramid of doom, callback hell.</h1>
 
 <p>Javascript est single-thread et asynchrone.</p>
 
 <p>Afin de ne pas bloquer <a href="http://latentflip.com/loupe/?code=!!!PGJ1dHRvbj5DbGljayBtZSE8L2J1dHRvbj4%3D" >l'event-loop</a> coté client
-(et pour les mêmes raisons coté backend avec node.js) il faut pouvoir déférer les appels qui doivent être consécutifs.
+(et aussi coté backend avec node.js) il faut pouvoir déférer les appels qui doivent être consécutifs.
 C'est là où interviennent les call-back.</p>
 
 <pre><code class="js">
@@ -291,11 +288,39 @@ app.init(function(){
 }
 </code></pre>
 
-<h2>solution promise, generator, async await ?</h2>
+<p>La pyramide of doom c'est les multiples fermetures &ldquo;&rdquo;});});&ldquo; en fin de fonction.
+Idéalement on voudrait écrire cela :</p>
 
-<p>Beaucoup de solutions existantes autours de librairies :
--Q
--Co</p>
+<pre><code class="js">var app = App();
+app.init()
+    .checkCredentials("user", "password")
+    .app.connectToDB()
+    .addUserComments("hie");
+</code></pre>
+
+<p>C'est à dire écrire en style synchrone, mais en guardant le comportement asynchrone</p>
+
+<p>.## solution promise, generator, async await ?</p>
+
+<p>Beaucoup de solutions existantes autours de librairies :</p>
+
+<ul>
+<li><a href="https://www.npmjs.com/package/q" target="_blank">Q</a>
+<li><a href="https://www.npmjs.com/package/co" target="_blank">Co</a>
+<li><a href="https://www.npmjs.com/package/async" target="_blank">async (comme librairie, pas comme la fonction native JS1.7)</a>
+<li><a href="https://www.npmjs.com/search?q=async" target="_blank">... et 4906 packages npm (à l'heure d'aujourd'hui) qui correspondent à async...</a>
+</ul>
+
+
+<p>Mais aussi autours de solutions natives en 1.6 et ou 1.7:</p>
+
+<ul>
+<li><a href="https://www.npmjs.com/package/q" target="_blank">Promise (1.6)</a>
+<li><a href="https://www.npmjs.com/package/co" target="_blank">Générator + variable (1.6)</a>
+<li><a href="https://www.npmjs.com/package/co" target="_blank">Générator + Promise(1.6)</a>
+<li><a href="https://www.npmjs.com/package/co" target="_blank">Async + Await (1.7) </a>
+</ul>
+
 </div>
     <!-- <div class="breaker"></div> -->
     <div class="breaker"></div>
