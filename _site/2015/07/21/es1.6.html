@@ -23,19 +23,19 @@
     
     <meta property="og:title" content="Javascript 1.6 / ES2015 Features">
       
-      <meta name="description" content="Javascript 1.6 / ES2015 Features May 26, 2015 Introduction Il s'agit de quelques améliorations de JS 2015 aka 1.6. Nous ne présentons que quelques fonctionnalités/syntaxes...">
-      <meta name="og:description" content="Javascript 1.6 / ES2015 Features May 26, 2015 Introduction Il s'agit de quelques améliorations de JS 2015 aka 1.6. Nous ne présentons que quelques fonctionnalités/syntaxes...">
+      <meta name="description" content="Javascript 1.6 / ES2015 Features Jul 21, 2015 Introduction Il s'agit d'une courte présentation de JS 2015 aka 1.6 Pas du tout exhaustif. Chaque élément...">
+      <meta name="og:description" content="Javascript 1.6 / ES2015 Features Jul 21, 2015 Introduction Il s'agit d'une courte présentation de JS 2015 aka 1.6 Pas du tout exhaustif. Chaque élément...">
       
     
     
     
     
-    <meta property="og:url" content="http://rsms.me/2015/05/26/es1.6.html">
+    <meta property="og:url" content="http://rsms.me/2015/07/21/es1.6.html">
     <meta property="og:site_name" content="rsms.me">
     <meta property="og:type" content="article">
     <meta property="og:locale" content="en_GB" />
     
-    <meta property="article:published_time" content="2015-05-26">
+    <meta property="article:published_time" content="2015-07-21">
     
     
     <script>
@@ -87,18 +87,45 @@
   <div class="post single">
     
     <h1>Javascript 1.6 / ES2015 Features</h1>
-    <info datetime="2015-05-26">
-      May 26, 2015
+    <info datetime="2015-07-21">
+      Jul 21, 2015
     </info>
     
     <div class="body"><h1>Introduction</h1>
 
-<p>Il s'agit de quelques améliorations de JS 2015 aka 1.6.
-Nous ne présentons que quelques fonctionnalités/syntaxes nouvelles en regard de problèmes de la version 1.5.</p>
+<p>Il s'agit d'une courte présentation de JS 2015 aka 1.6 Pas du tout exhaustif.</p>
+
+<p>Chaque élément présenté est mis en regard avec un aspect de Javascript 1.5 (celui de tout les jours)</p>
 
 <h1>Scope and Hoisting</h1>
 
-<h2>Problème : Hoisting, the scope is the function</h2>
+<h2>Le hoisting c'est quoi ?</h2>
+
+<p>Quand j'écris :</p>
+
+<pre><code class="js">function f(){
+    console.log(a);
+
+    //...
+
+    return;
+    var a ;
+}
+</code></pre>
+
+<p>Le code executé sera :</p>
+
+<pre><code class="js">function f(){
+    var a ; // a has been hoisted
+    console.log(a);
+
+    //...
+
+    return;
+}
+</code></pre>
+
+<p>Donc</p>
 
 <pre><code class="js">function f(){
     console.log(a);
@@ -106,8 +133,6 @@ Nous ne présentons que quelques fonctionnalités/syntaxes nouvelles en regard d
 </code></pre>
 
 <p>Uncaught ReferenceError: a is not defined</p>
-
-<h3>Hoisting</h3>
 
 <pre><code class="js">function f(){
     console.log(a);
@@ -117,9 +142,9 @@ Nous ne présentons que quelques fonctionnalités/syntaxes nouvelles en regard d
 
 <p>undefined</p>
 
-<p>Pourquoi ? les déclarations de variables avec le mot clé &ldquo;var&rdquo; sont déplacés en début de leurs scopes lors du pré-processing (Hoisting).</p>
+<p>Les déclarations de variables (&ldquo;var a&rdquo;) sont déplacés en début de leurs scopes lors du pré-processing (Hoisting).</p>
 
-<h3>The scope is the function</h3>
+<h3>So&hellip;The scope is the function</h3>
 
 <pre><code class="js">function f(){
     if(true) {
@@ -153,29 +178,59 @@ Nous ne présentons que quelques fonctionnalités/syntaxes nouvelles en regard d
 }
 </code></pre>
 
-<h1>Les Lambda</h1>
-
 <h2>Problème binding &ldquo;this&rdquo; !</h2>
 
-<p>Exemple from <a href="https://leanpub.com/understandinges6/read/" >LeanPub</a></p>
+<h3>D'un coté on a le lexical scope des variables (pas &ldquo;this&rdquo; donc)</h3>
 
-<pre><code class="js">var PageHandler = {
+<pre><code class="js">var a = 10;
 
-    id: "123456",
+function f(){
+    console.log("a is "  + a);
+}
 
-    init: function() {
-        document.addEventListener("click", function(event) {
-            this.doSomething(event.type);     // error
-        }, false);
-    },
 
-    doSomething: function(type) {
-        console.log("Handling " + type  + " for " + this.id);
-    }
-};
+function g(){
+    var a = 155;
+    f();
+}
+
+g();//ecrit dans la console 10 parceque le scope est lexical
+// (là où qu'il est déclaré, pas là où il est appellé)
 </code></pre>
 
-<h2>Solution : les lambdas (Arrow functions)</h2>
+<h3>de l'autre on a la Règle du binding &ldquo;this&rdquo;</h3>
+
+<ul>
+<li>appel de fonction myFunc() (no context use global context )</li>
+<li>appel de method (toto.myFunc()) (implict context)</li>
+<li>call apply myFunc.apply(truc) &hellip;. (bounded)</li>
+<li>bind myFunc.bind(truc) (hard bounded)</li>
+<li>new call (new is the stronger)</li>
+</ul>
+
+
+<p>Qui fait faire ce genre de boulette :</p>
+
+<pre><code class="js">
+    var obj = {
+        myAtt : "truc",
+        getMyAtt: function(){
+            return this.myAtt;
+        }
+    };
+
+    obj.getMyAtt();//inplicit binding ... return "truc"...ok 
+
+    var myFuncUnBinded = obj.getMyAtt;
+    myFuncUnBinded(); //return undefined wat ?
+
+    var myAtt = "from global scope";
+    myFuncUnBinded(); //return "from global scope" waaaaaaat ?
+</code></pre>
+
+<h1>Les Lambda</h1>
+
+<p>Fuck &ldquo;this&rdquo; binding ! use lexical scope !</p>
 
 <pre><code class="js">
 var PageHandler = {
@@ -184,6 +239,7 @@ var PageHandler = {
 
     init: function() {
         document.addEventListener("click", 
+                //this is bind to lexical scope ...ie PageHandler !
                 event =&gt;  this.doSomething(event.type), false);
     },
 
@@ -342,7 +398,7 @@ Q.fcall(app.init())
     <!-- <div class="breaker"></div> -->
     <div class="breaker"></div>
     <!-- <info class="after">
-<div class="fb-like" data-href="http://rsms.me/2015/05/26/es1.6.html" data-send="false" data-width="550" data-show-faces="false" data-font="arial"></div>
+<div class="fb-like" data-href="http://rsms.me/2015/07/21/es1.6.html" data-send="false" data-width="550" data-show-faces="false" data-font="arial"></div>
     </info> -->
 
   </div>
