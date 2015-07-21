@@ -166,89 +166,6 @@
 }
 </code></pre>
 
-<h2>Nouveauté  : Const (let immutable) !</h2>
-
-<pre><code class="js">function f(){
-    const a = 10;
-    a = 5; //error a is a const !
-    const c = {toto : 7};
-    c= {};//error b is a const !
-    c.toto = 8; //ok, not a deep immutable
-
-}
-</code></pre>
-
-<h2>Problème binding &ldquo;this&rdquo; !</h2>
-
-<h3>D'un coté on a le lexical scope des variables (pas &ldquo;this&rdquo; donc)</h3>
-
-<pre><code class="js">var a = 10;
-
-function f(){
-    console.log("a is "  + a);
-}
-
-
-function g(){
-    var a = 155;
-    f();
-}
-
-g();//ecrit dans la console 10 parceque le scope est lexical
-// (là où qu'il est déclaré, pas là où il est appellé)
-</code></pre>
-
-<h3>de l'autre on a la Règle du binding &ldquo;this&rdquo;</h3>
-
-<ul>
-<li>appel de fonction myFunc() (no context use global context )</li>
-<li>appel de method (toto.myFunc()) (implict context)</li>
-<li>call apply myFunc.apply(truc) &hellip;. (bounded)</li>
-<li>bind myFunc.bind(truc) (hard bounded)</li>
-<li>new call (new is the stronger)</li>
-</ul>
-
-
-<p>Qui fait faire ce genre de boulette :</p>
-
-<pre><code class="js">
-    var obj = {
-        myAtt : "truc",
-        getMyAtt: function(){
-            return this.myAtt;
-        }
-    };
-
-    obj.getMyAtt();//inplicit binding ... return "truc"...ok 
-
-    var myFuncUnBinded = obj.getMyAtt;
-    myFuncUnBinded(); //return undefined wat ?
-
-    var myAtt = "from global scope";
-    myFuncUnBinded(); //return "from global scope" waaaaaaat ?
-</code></pre>
-
-<h1>Les Lambda</h1>
-
-<p>Fuck &ldquo;this&rdquo; binding ! use lexical scope !</p>
-
-<pre><code class="js">
-var PageHandler = {
-
-    id: "123456",
-
-    init: function() {
-        document.addEventListener("click", 
-                //this is bind to lexical scope ...ie PageHandler !
-                event =&gt;  this.doSomething(event.type), false);
-    },
-
-    doSomething: function(type) {
-        console.log("Handling " + type  + " for " + this.id);
-    }
-};
-</code></pre>
-
 <h1>Boilerplate</h1>
 
 <h2>Problème, initialisations, code verbeux&hellip;</h2>
@@ -394,6 +311,82 @@ Q.fcall(app.init())
 <li><a href="https://www.npmjs.com/package/co" target="_blank">Async + Await (1.7) </a>
 </ul>
 
+
+<h2>Problème binding &ldquo;this&rdquo; !</h2>
+
+<h3>D'un coté on a le lexical scope des variables (pas &ldquo;this&rdquo; donc)</h3>
+
+<pre><code class="js">var a = 10;
+
+function f(){
+    console.log("a is "  + a);
+}
+
+
+function g(){
+    var a = 155;
+    f();
+}
+
+g();//ecrit dans la console 10 parceque le scope est lexical
+// (là où qu'il est déclaré, pas là où il est appellé)
+</code></pre>
+
+<h3>de l'autre on a la Règle du binding &ldquo;this&rdquo;</h3>
+
+<ul>
+<li>appel de fonction myFunc() (no context use global context )</li>
+<li>appel de method (toto.myFunc()) (implict context)</li>
+<li>call apply myFunc.apply(truc) &hellip;. (bounded)</li>
+<li>bind myFunc.bind(truc) (hard bounded)</li>
+<li>new call (new is the stronger)</li>
+</ul>
+
+
+<p>Qui fait faire ce genre de boulette :</p>
+
+<pre><code class="js">
+    var obj = {
+        myAtt : "truc",
+        getMyAtt: function(){
+            return this.myAtt;
+        }
+    };
+
+    obj.getMyAtt();//inplicit binding ... return "truc"...ok 
+
+    var myFuncUnBinded = obj.getMyAtt;
+    myFuncUnBinded(); //return undefined wat ?
+
+    var myAtt = "from global scope";
+    myFuncUnBinded(); //return "from global scope" waaaaaaat ?
+</code></pre>
+
+<h1>Les Lambda / arrow function</h1>
+
+<p>Les lambda permettent de déclarer des fonctions de manières plus courtes&hellip;</p>
+
+<pre><code class="js">myFunc = event =&gt;  this.doSomething(event.type), false);
+</code></pre>
+
+<p>Fuck &ldquo;this&rdquo; binding ! use lexical scope !</p>
+
+<pre><code class="js">
+var PageHandler = {
+
+    id: "123456",
+
+    init: function() {
+        document.addEventListener("click", 
+                //this is bind to lexical scope ...ie PageHandler !
+                event =&gt;  this.doSomething(event.type), false);
+    },
+
+    doSomething: function(type) {
+        console.log("Handling " + type  + " for " + this.id);
+    }
+};
+</code></pre>
 </div>
     <!-- <div class="breaker"></div> -->
     <div class="breaker"></div>
