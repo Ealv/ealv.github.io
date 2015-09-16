@@ -9,7 +9,7 @@ layout: default
   <div class="content full-bleed" id="recent-posts">
  
   {% for post in site.posts limit:25 post.path contains "1-1" %}
-   {% if post.path  contains "docker" %}
+   {% if post.path  contains "docker" or post.path  contains "event-loop" %}
    
    {% else %}
   <a
@@ -32,7 +32,7 @@ layout: default
       </div>
       {% endif %}
     </a>{% endfor %}
-    <a href="./docker.html"> docker.html</a>
+    <!-- <a href="./docker.html"> docker.html</a> -->
     <div class="breaker"></div>
     
     <div class="end">
