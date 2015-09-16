@@ -55,20 +55,19 @@
   </head>
   <body{% if page.wide_layout %} class="wide"{% endif %}>
 
-    <iframe id="sidebar"></iframe>
     <header>
-      <h1 class="logo" onclick="document.location.href='/';"><a href="/"><img src="/res/signature-2-2.png" width="160" height="50" alt="Signature"></a></h1>
+      <h1 class="logo" onclick="document.location.href='/';">
+        <a href="/"><img src="/res/laplage-bokanowski.png" width="272" height="208" alt="Signature"></a>
+      </h1>
+      <!--
       <ul class="navigation">
         <li><a href="/archive/"{% if page.url contains "/archive/" %}class="active"{% endif %} title="Archived articles">Archive</a></li>
         <li><a href="/about/"{% if page.url contains "/about/" %}class="active"{% endif %}>About me</a></li>
       </ul>
+      -->
     </header>
       {{ content }}
-    
-    {% if page.fb_comments or page.comments %}
-
-    {% endif %}
-    
+  
     {% if paginator.page %}
     <div id="paginator" class="content">
       {% if paginator.next_page %}

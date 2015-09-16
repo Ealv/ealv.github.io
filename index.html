@@ -7,7 +7,12 @@ layout: default
 
 <div class="posts">
   <div class="content full-bleed" id="recent-posts">
-  {% for post in site.posts limit:25 %}<a
+ 
+  {% for post in site.posts limit:25 post.path contains "1-1" %}
+   {% if post.path  contains "docker" %}
+   
+   {% else %}
+  <a
     href="{{ post.url }}" class="post-excerpt{% if post.photo_url %} photo{% endif %}">
       <div class="padded-content">
         <div class="title">{{ post.title }}</div>
@@ -25,8 +30,11 @@ layout: default
         {% endif %}
       {% endif %}<!-- post.photo_url -->
       </div>
+      {% endif %}
     </a>{% endfor %}
+    <a href="./docker.html"> docker.html</a>
     <div class="breaker"></div>
+    
     <div class="end">
     <!--
       <a href="/archive/">More...</a>

@@ -6,7 +6,12 @@ date: 2015-08-10 10:00:00 UTC
 title: Asynchronous functions for Javascript
 ---
 
+
+Asynchonous way on JS, a taxonomy ?
+
+
 # Introduction
+
 
 They are a lot of hard things to get it right in Javascript. Hopefully, some good fellows can help to level-up with no time. Kiles Simpson (aka getify) with his books [You don't know JS](https://github.com/getify/You-Dont-Know-JS), the alway sharp [blog](http://www.2ality.com/) from Dr. Axel Rauschmayer and finally the talk from Robert Phillip about the <a href="http://latentflip.com/loupe/?code=!!!PGJ1dHRvbj5DbGljayBtZSE8L2J1dHRvbj4%3D" >event-loop</a>.
 
