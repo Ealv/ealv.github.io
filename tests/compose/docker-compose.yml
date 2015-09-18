@@ -1,0 +1,11 @@
+nodejs:
+  image: node-test
+  volumes:
+    - .:/var/app
+  links:
+    - elasticsearch
+  environment:
+    - MY_VAR
+
+elasticsearch:
+  image: elasticsearch:1.5.2
