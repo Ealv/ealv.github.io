@@ -14,7 +14,7 @@ body {
   margin: 0;
 }
 body {
-	background:  radial-gradient(ellipse farthest-corner, #949fa7, #CCCCCC 70%, white);
+	background:  radial-gradient(ellipse farthest-corner, #CCCCCC,#949fa7 70%);
 }
 .column {
   flex-grow: 1;
@@ -120,7 +120,7 @@ content:"<";
 </style>
 
 <body id="container">
-<div style="text-align:center">
+<div style="text-align:center;font-size:50px;line-height:50px;">
 All the true in this cheatsheet came from <a href="https://github.com/getify/You-Dont-Know-JS" > You don't know JS</a>. If you find any errors, then it is mine (thank you to report!).
 </div>
 	<div id="middle">
@@ -136,8 +136,8 @@ All the true in this cheatsheet came from <a href="https://github.com/getify/You
 			<div class="row" style="flex-basis:300px;flex-grow:0;">
 				<div class="javascript" style="flex-basis:90px;flex-grow:1;">
 function f(){
-<br>	var a = "hie";<br>
-console.log(a);//hie !<br>
+<br>	var a = "hi!";<br>
+console.log(a);//hi !<br>
 return;<br> 
 }
 </div>
@@ -145,12 +145,12 @@ return;<br>
 		
 				<div class=" javascript" style="flex-basis:110px;flex-grow:1;">
 function f(){<br>
-	a = "hie";<br>
-	console.log(a);//hie !<br>
+	a = "hi !";<br>
+	console.log(a);//hi !<br>
 	var a;//declaration is hoisted<br>
 	//scope is the function<br>
 	return;<br>
-}
+}<br>
 
 console.log(a);<br>
 //ReferenceError<br>
@@ -160,9 +160,9 @@ console.log(a);<br>
 				<div class=" javascript" style="flex-basis:100px;flex-grow:1;margin-left: 5px;">
 function f(){<br>
 	if(true){<br>
-		let a= "hie";<br>
+		let a= "hi!";<br>
 		console.log(a);<br> 
-		//hie<br> 
+		//hi!<br> 
 	}<br>
 	console.log(a);<br>
 	//crash : a is undefined<br> 
@@ -185,7 +185,7 @@ function g(){<br>
 	f();<br>
 }<br>
 g();//will print "from lexical" not "from execution": scope is <br>
-//lexicographic. (See you don't know)
+//lexicographic.
 				</div>
 			</div>
 
@@ -296,7 +296,7 @@ arrowAndBind(); //  "Arrow is <br>
 
 				
 				<div class="column">
-				<div class="title">"NEW" operator</div>
+				<div class="title">'new' operator</div>
 				<div class="javascript">
 function f(a){<br>
 		this.a = a;<br>
