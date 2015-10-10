@@ -54,6 +54,7 @@ body {
 }
 .bigtitle {
   margin: 5px;
+  padding: 5px 0; 
   text-align: center;
   line-height: 30px;
   font-size: 30px;
@@ -67,6 +68,8 @@ body {
 .title {
  
   margin: 5px 0;
+  padding: 5px 0;
+
   text-align: center;
   line-height: 30px;
   font-size: 30px;
@@ -174,7 +177,7 @@ function f(){<br>
 			<div class="title ">
 				Between functions  : Lexical Scope
 			</div>
-			<div class="row " style="flex-basis:289px;flex-grow:1;">
+			<div class="row " style="flex-basis:262px;flex-grow:1;">
 				<div class="javascript" >
 var a = "from lexical";<br>
 function f(){<br>
@@ -199,7 +202,7 @@ function f(){<br>
 	//the only exposition<br>
 	// to the current scope<br>
 	return {<br>
-		getSecret : function(){return a;}					<br>
+		getSecret : function(){return a;}<br>
 	 	};<br>
  }<br>
  	var secretInterface = f();<br>
@@ -227,17 +230,17 @@ console.log(a);//"default binding" (a is in global scope)
 				<div class="prior" ></div>
 			<div class="title ">
 				Implicit binding for object literal
-			</div>
+</div>
 
 			
-				<div class="javascript">
+				<div class="javascript" style="flex-basis:157px;">
 var obj = {<br>
 	a : "",<br>
 	f : function(a){ this.a = a; }<br>
 };<br>
  obj.f("implicit binding");<br>
  obj.a;// "implicit binding";<br>
-	</div>
+ 			 			</div>
 					<div class="prior" ></div>
 
 			<div class="title">
