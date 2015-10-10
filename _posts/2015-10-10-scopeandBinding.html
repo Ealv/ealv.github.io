@@ -66,7 +66,7 @@ body {
 }
 .title {
  
-  margin: 5px;
+  margin: 5px 0;
   text-align: center;
   line-height: 30px;
   font-size: 30px;
@@ -101,6 +101,7 @@ body {
   border-top-style: solid;
 }
 .hljs.javascript {
+  margin:0 5px;
   border-color: #949FA7;
   border-width: 1px;
   border-style: solid;
@@ -133,7 +134,7 @@ All the true in this cheatsheet came from <a href="https://github.com/getify/You
 				<div class="subtitle" style="flex-basis:0;flex-grow:2;margin:0">'var' is Function Scoped</div>
 				<div class="subtitle" style="flex-basis:0;flex-grow:1;margin:0 0 0 5px;">'let' and 'const' are Block Scoped</div>
 			</div>
-			<div class="row" style="flex-basis:300px;flex-grow:0;">
+			<div class="row" style="flex-basis:330px;flex-grow:0;">
 				<div class="javascript" style="flex-basis:90px;flex-grow:1;">
 function f(){
 <br>	var a = "hi!";<br>
@@ -143,10 +144,11 @@ return;<br>
 </div>
 
 		
-				<div class=" javascript" style="flex-basis:110px;flex-grow:1;">
+				<div class=" javascript" style="flex-basis:110px;flex-grow:1;margin-right:10px">
 function f(){<br>
 	a = "hi !";<br>
-	console.log(a);//hi !<br>
+	console.log(a);<br>
+	//hi !<br>
 	var a;//declaration is hoisted<br>
 	//scope is the function<br>
 	return;<br>
@@ -157,7 +159,7 @@ console.log(a);<br>
 // a i not defined!<br>
 </div>
 	
-				<div class=" javascript" style="flex-basis:100px;flex-grow:1;margin-left: 5px;">
+				<div class=" javascript" style="flex-basis:100px;flex-grow:1;margin-left:5px;">
 function f(){<br>
 	if(true){<br>
 		let a= "hi!";<br>
@@ -168,14 +170,12 @@ function f(){<br>
 	//crash : a is undefined<br> 
 }
 </div>
-
-			</div>
-
+</div>
 			<div class="title ">
 				Between functions  : Lexical Scope
 			</div>
-			<div class="row ">
-				<div class="javascript">
+			<div class="row " style="flex-basis:289px;flex-grow:1;">
+				<div class="javascript" >
 var a = "from lexical";<br>
 function f(){<br>
 	console.log(a);<br>
@@ -185,8 +185,7 @@ function g(){<br>
 	f();<br>
 }<br>
 g();//will print "from lexical" not "from execution": scope is <br>
-//lexicographic.
-				</div>
+//lexicographic.</div>
 			</div>
 
 			<div class="title ">
@@ -238,7 +237,7 @@ var obj = {<br>
 };<br>
  obj.f("implicit binding");<br>
  obj.a;// "implicit binding";<br>
-				</div>
+	</div>
 					<div class="prior" ></div>
 
 			<div class="title">
@@ -262,10 +261,7 @@ var obj = {<br>
 <div class="javascript">
 var obj =	{a : ""};<br>
 var other =	{ a : ""};<br>
-var bindedToOther = function(a){<br>
-		this.a = a;<br>
-	}.bind(other);<br>
-
+var bindedToOther = function(a){		this.a = a;}.bind(other);<br>
 bindedToOther.call(obj,"call can't unbind from Bind !");<br>
 other.a//"call can't unbind from Bind ! ! ";<br>
 </div>
@@ -289,8 +285,8 @@ function arrowAndBind(a) {<br>
 	console.log(bindedF());<br>
  }<br>
 
-arrowAndBind(); //  "Arrow is <br>
-//stronger"<br>
+arrowAndBind();<br>
+//"Arrow is stronger"<br>
 </div>
 </div>
 
@@ -307,16 +303,17 @@ var myFunc = f.bind(bindContext);<br>
 var newContruct = new&nbsp;myFunc("NEW is stronger!")<br>
 newContruct.a;// "NEW is stronger"<br>
 </div>
+	<div class="row" style="padding:0 20px;margin-top:15px;font-size:24px;line-height:24px;text-align:center">
+		"new" and Fat Arrow cannot be compared together (Arrow func can't be used with New operator)
+	</div>
+
 <div>
 			</div>
 		</div>
 	</div>
-<div class="row" style="line">
-	<span class="prior" style="line-height:87px" ></span> Relation about binding strength
+<div class="row" style="line-height:87px">
+	<span class="prior"  ></span> Relation about binding strength
 </div>
-	<div class="row" style="font-size:12px;line-height:12px;">
-	("New" and Fat Arrow cannot be compared together (Arrow func can't be used with New operator))
-	</div>
 
 
 
