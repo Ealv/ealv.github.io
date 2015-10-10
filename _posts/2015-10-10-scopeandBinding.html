@@ -14,7 +14,7 @@ body {
   margin: 0;
 }
 body {
-  background-color: #949fa7;
+	background:  radial-gradient(ellipse farthest-corner, #949fa7, #CCCCCC 70%, white);
 }
 .column {
   flex-grow: 1;
@@ -58,14 +58,14 @@ body {
   line-height: 30px;
   font-size: 30px;
   border-radius: 5px;
-  background: linear-gradient(to bottom, #0088cc 0, #48b4fb 100%);
   color: #FFFFFF;
   line-height: 60px;
   font-size: 60px;
   border-radius: 7px;
-  background: linear-gradient(to bottom, #e85c33 0, #e53a2b 100%);
+  background: linear-gradient(to bottom, #3371E8 0, #2E6DE6 100%);
 }
 .title {
+ 
   margin: 5px;
   text-align: center;
   line-height: 30px;
@@ -104,62 +104,70 @@ body {
   border-color: #949FA7;
   border-width: 1px;
   border-style: solid;
+  border-radius : 5px;
 }
 .prior {
   text-align: center;
-  font-size: 20px;
-  line-height: 20px;
-  color: RED;
+  font-size: 87px;
+  color: #055D46;
+  transform:rotate(90deg);
+}
+
+.prior:after {
+
+content:"<";
 }
 </style>
 
 <body id="container">
+<div style="text-align:center">
+All the true in this cheatsheet came from <a href="https://github.com/getify/You-Dont-Know-JS" > You don't know JS</a>. If you find any errors, then it is mine (thank you to report!).
+</div>
 	<div id="middle">
 		<div id="col1" class="column rightborder">
 			<div class="bigtitle ">
 				Variable Scope
 			</div>
-			<div class="title">Into the function, function or block scope.</div>
-			<div class="row">
-				<div class="column">
-					<div class="subtitle ">var is Function Scoped</div>
-					<div style="display:flex">
-						<div class="column">
-							<div class="javascript hljs">
+			<div class="title">function scope or block scope.</div>
+			<div class="row" style="flex-basis:70px;flex-grow:0;margin:5px 0 ;">
+				<div class="subtitle" style="flex-basis:0;flex-grow:2;margin:0">'var' is Function Scoped</div>
+				<div class="subtitle" style="flex-basis:0;flex-grow:1;margin:0 0 0 5px;">'let' and 'const' are Block Scoped</div>
+			</div>
+			<div class="row" style="flex-basis:300px;flex-grow:0;">
+				<div class="javascript" style="flex-basis:90px;flex-grow:1;">
 function f(){
-<br>	var a = "hie";
-<br>	console.log(a);//hie !
-<br>	return;
-<br> }
-							</div>
-						</div>
-						<div class="column">
-							<div class="javascript hljs">
+<br>	var a = "hie";<br>
+console.log(a);//hie !<br>
+return;<br> 
+}
+</div>
+
+		
+				<div class=" javascript" style="flex-basis:110px;flex-grow:1;">
 function f(){<br>
 	a = "hie";<br>
 	console.log(a);//hie !<br>
-	return;<br>
 	var a;//declaration is hoisted<br>
-	//scope is the function<nbr>
+	//scope is the function<br>
+	return;<br>
 }
-							</div>
-						</div>
-					</div>
-				</div>
 
-				<div class="column">
-					<div class="subtitle ">let and const are Block Scoped</div>
-					<div class="javascript">
+console.log(a);<br>
+//ReferenceError<br>
+// a i not defined!<br>
+</div>
+	
+				<div class=" javascript" style="flex-basis:100px;flex-grow:1;margin-left: 5px;">
 function f(){<br>
 	if(true){<br>
 		let a= "hie";<br>
-		console.log(a);//hie<br> 
+		console.log(a);<br> 
+		//hie<br> 
 	}<br>
 	console.log(a);<br>
 	//crash : a is undefined<br> 
 }
-					</div>
-				</div>
+</div>
 
 			</div>
 
@@ -217,9 +225,7 @@ function f(a){<br>
 f("default binding");<br>
 console.log(a);//"default binding" (a is in global scope)
 				</div>
-				<div class="prior" >
-			has less priority then :
-			</div>
+				<div class="prior" ></div>
 			<div class="title ">
 				Implicit binding for object literal
 			</div>
@@ -233,9 +239,7 @@ var obj = {<br>
  obj.f("implicit binding");<br>
  obj.a;// "implicit binding";<br>
 				</div>
-					<div class="prior" >
-			has less priority then :
-			</div>
+					<div class="prior" ></div>
 
 			<div class="title">
 				Call/Apply
@@ -250,31 +254,26 @@ var obj = {<br>
  obj.f.call(other,"call override implicit binding");<br>
  other.a//"call override implicit binding";<br>
 </div>
-	<div class="prior" >
-			has less priority then :
-			</div>
+	<div class="prior" ></div>
 
 			<div class="title">
 				Bind
 				</div>
 <div class="javascript">
-var obj = {<br>
-	a : "",<br>
-	f : function(a){<br>
+var obj =	{a : ""};<br>
+var other =	{ a : ""};<br>
+var bindedToOther = function(a){<br>
 		this.a = a;<br>
-	}<br>
-};<br>
-var other = { a : ""};<br>
-var bindedToOther = obj.f.bind(other);<br>
+	}.bind(other);<br>
 
 bindedToOther.call(obj,"call can't unbind from Bind !");<br>
 other.a//"call can't unbind from Bind ! ! ";<br>
 </div>
 
-				<div class="prior" >
-			has less priority then :
-			</div>
-
+<div class="row" style="justify-content:space-between;padding:0 55px;">
+		<span class="prior" ></span>
+		<span class="prior" ></span>
+</div>
 			<div class="row">
 				<div class="column">
 				<div class="title rightborder">Arrow function</div>
@@ -312,9 +311,11 @@ newContruct.a;// "NEW is stronger"<br>
 			</div>
 		</div>
 	</div>
-
-	<div class="row" style="font-size:12px">
-	("New" and Arrow can not be compared together (Arrow func can't be used with New operator))
+<div class="row" style="line">
+	<span class="prior" style="line-height:87px" ></span> Relation about binding strength
+</div>
+	<div class="row" style="font-size:12px;line-height:12px;">
+	("New" and Fat Arrow cannot be compared together (Arrow func can't be used with New operator))
 	</div>
 
 
