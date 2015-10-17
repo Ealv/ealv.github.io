@@ -15,6 +15,7 @@ body {
 }
 body {
 	background:  radial-gradient(ellipse farthest-corner, #CCCCCC,#949fa7 70%);
+	background-attachment: fixed;
 }
 .column {
   flex-grow: 1;
@@ -46,47 +47,40 @@ body {
 }
 #col1,
 #col2 {
-  padding: 10px 10px;
+  padding: 10px 0;
   width: 50%;
 }
 #col2 {
   justify-content: flex-start;
 }
-.bigtitle {
-  margin: 5px;
-  padding: 5px 0; 
-  text-align: center;
-  line-height: 30px;
-  font-size: 30px;
-  border-radius: 5px;
-  color: #FFFFFF;
-  line-height: 60px;
-  font-size: 60px;
-  border-radius: 7px;
-  background: linear-gradient(to bottom, #3371E8 0, #2E6DE6 100%);
-}
+
 .title {
- 
+  color: #055D46;
   margin: 5px 0;
   padding: 5px 0;
 
   text-align: center;
   line-height: 30px;
   font-size: 30px;
-  border-radius: 5px;
-  background: linear-gradient(to bottom, #0088cc 0, #48b4fb 100%);
-  color: #FFFFFF;
+  
 }
 .subtitle {
   margin: 5px;
   text-align: center;
   line-height: 30px;
-  font-size: 30px;
-  border-radius: 5px;
-  background: linear-gradient(to bottom, #0088cc 0, #48b4fb 100%);
-  color: #FFFFFF;
+  font-size: 30px; 
   font-size: 20px;
 }
+
+.bigtitle {
+  padding: 0; 
+  text-align: center;
+  line-height: 30px;
+  font-size: 30px;
+  line-height: 60px;
+  font-size: 60px;
+}
+
 .rightborder {
   border-right-width: 1px;
   border-right-style: solid;
@@ -104,7 +98,9 @@ body {
   border-top-style: solid;
 }
 .hljs.javascript {
+	
   margin:0 5px;
+  box-shadow: 8px 8px 12px #aaa;
   border-color: #949FA7;
   border-width: 1px;
   border-style: solid;
@@ -125,17 +121,17 @@ content:"<";
 
 <body id="container">
 <div style="text-align:center;font-size:50px;line-height:50px;">
-All the true in this cheatsheet came from <a href="https://github.com/getify/You-Dont-Know-JS" > You don't know JS</a>. If you find any errors, then it is mine (thank you to report!).
+Here a lot of things come from <a href="https://github.com/getify/You-Dont-Know-JS" > You don't know JS</a>.<br> It is definitely a must read ! 
 </div>
 	<div id="middle">
-		<div id="col1" class="column rightborder">
-			<div class="bigtitle ">
+		<div id="col1" class="column">
+			<div class="bigtitle title">
 				Variable Scope
 			</div>
 			<div class="title">function scope or block scope.</div>
 			<div class="row" style="flex-basis:70px;flex-grow:0;margin:5px 0 ;">
-				<div class="subtitle" style="flex-basis:0;flex-grow:2;margin:0">'var' is Function Scoped</div>
-				<div class="subtitle" style="flex-basis:0;flex-grow:1;margin:0 0 0 5px;">'let' and 'const' are Block Scoped</div>
+				<div class="subtitle title" style="flex-basis:0;flex-grow:2;margin:0">'var' is Function Scoped</div>
+				<div class="subtitle title" style="flex-basis:0;flex-grow:1;margin:0 0 0 5px;">'let' and 'const' are Block Scoped</div>
 			</div>
 			<div class="row" style="flex-basis:330px;flex-grow:0;">
 				<div class="javascript" style="flex-basis:90px;flex-grow:1;">
@@ -212,7 +208,7 @@ function f(){<br>
 			</div>
 		</div>
 		<div id="col2" class="column">
-			<div class="bigtitle ">
+			<div class="bigtitle title">
 				Binding "this"
 			</div>
 
@@ -275,7 +271,7 @@ other.a//"call can't unbind from Bind ! ! ";<br>
 </div>
 			<div class="row">
 				<div class="column">
-				<div class="title rightborder">Arrow function</div>
+				<div class="title">Arrow function</div>
 							<div class=" javascript">
 function arrowAndBind(a) {<br>
 	//use global here for the sake of clarity<br>
